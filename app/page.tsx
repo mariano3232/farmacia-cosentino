@@ -33,9 +33,10 @@ export default function Home() {
           {Array.from({ length: 4 }).map((_, index) => (
             <PlaceholderCard key={index} className="h-[146px]" />
           ))}
+          <PlaceholderCard className="mb-16 h-[146px] sm:col-span-4" />
         </div>
 
-        <PlaceholderCard className="mb-16 h-[146px]" />
+        
       </section>
 
       <section className="mx-auto w-full max-w-[1512px] px-[60px] pb-12">
