@@ -8,7 +8,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Farmacia Cosentino",
-  description: "Farmacia Cosentino — Tu farmacia de confianza",
+  description: "Farmacia Cosentino",
+  icons:"/logo.png",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
