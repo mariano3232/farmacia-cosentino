@@ -1,10 +1,10 @@
 const categoryLabels: Record<string, string> = {
   ofertas: "Ofertas",
-  marcas: "Marcas",
+  insumos: "Insumos",
   medicamentos: "Medicamentos",
   perfumeria: "Perfumería",
-  "skin-care": "Skin Care",
   "cuidado-personal": "Cuidado Personal",
+  belleza: "belleza",
   bebes: "Bebes",
   otros: "Otros",
 };
