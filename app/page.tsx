@@ -34,7 +34,7 @@ export default function Home() {
         <BanksMarquee />
       </section>
 
-      <section className="mx-auto w-full">
+      {/* <section className="mx-auto w-full">
         <Title>Promociones bancarias para ahorrar más</Title>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-4 md:grid-cols-4">
           {Array.from({ length: 4 }).map((_, index) => (
@@ -42,7 +42,7 @@ export default function Home() {
           ))}
           <PlaceholderCard className="h-[146px] rounded-[9px] sm:col-span-4" />
         </div>
-      </section>
+      </section> */}
 
       <section className="mx-auto w-full">
         <Title>Super ofertas</Title>

@@ -11,7 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 import CarouselDots from "./CarouselDots";
 
-const PRODUCTS = 6;
+const offers = ["/OFERTA1.png","/OFERTA2.png"];
 
 export function ProductCarousel() {
   const [api, setApi] = React.useState<CarouselApi>();
@@ -40,18 +40,19 @@ export function ProductCarousel() {
     <div>
       <Carousel setApi={setApi} opts={{ align: "start", loop: true }} className="mb-6 w-full" >
         <CarouselContent className="ml-0">
-          {Array.from({ length: PRODUCTS }).map((_, index) => (
+          {offers.map((offer, index) => (
             <CarouselItem key={index} className="pl-0">
-              <Card className="rounded-[9px] border-0 bg-placeholder py-0 ring-0">
+              <img src={offer} alt="" className="rounded-[9px] px-5"/>
+              {/* <Card className="rounded-[9px] border-0 bg-placeholder py-0 ring-0">
                 <CardContent className="h-[321px] p-0" aria-hidden />
-              </Card>
+              </Card> */}
             </CarouselItem>
           ))}
         </CarouselContent>
       </Carousel>
 
       <CarouselDots
-        count={PRODUCTS}
+        count={offers.length}
         active={current}
         onSelect={(index) => api?.scrollTo(index)}
       />
