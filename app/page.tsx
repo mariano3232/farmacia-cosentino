@@ -21,7 +21,7 @@ function Title({ children }: { children: React.ReactNode }) {
 
 export default function Home() {
   return (
-    <main className="flex flex-1 gap-14 flex-col bg-white px-15 max-w-[1512px] pt-10">
+    <main className="flex flex-1 gap-14 flex-col bg-white px-15 lg:px-30 max-w-[1512px] pt-10">
       <section className="mx-auto w-full">
         <Title>¡Lo nuevo y súper piola!</Title>
         <HeroCarousel />

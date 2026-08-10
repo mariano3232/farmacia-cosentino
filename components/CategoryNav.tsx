@@ -16,7 +16,7 @@ const categories: Category[] = [
     label: "Ofertas",
     slug: "ofertas",
     highlight: true,
-    subCategories: ["aaa", "bbb"],
+    subCategories: ["Oferta 1", "Oferta 2"],
   },
   { label: "Insumos", slug: "insumos", subCategories: ["Descartables"] },
   {
@@ -44,12 +44,12 @@ const categories: Category[] = [
     label: "Bebes",
     slug: "bebes",
     subCategories: [
-      "pañales",
-      "lactancia",
-      "higiene del bebe",
-      "nutrición infaltil",
-      "cuidado materno",
-      "accesorios del bebe",
+      "Pañales",
+      "Lactancia",
+      "Higiene del bebe",
+      "Nutrición infaltil",
+      "Cuidado materno",
+      "Accesorios del bebe",
     ],
   },
   {
@@ -65,7 +65,7 @@ const categories: Category[] = [
   {
     label: "Otros",
     slug: "otros",
-    subCategories: ["accesorios", "tintura", "esmaltes"],
+    subCategories: ["Accesorios", "Tintura", "Esmaltes"],
   },
 ];
 
@@ -89,7 +89,7 @@ export function CategoryNav() {
       className="relative z-40 border-b border-placeholder/40 bg-white"
       onMouseLeave={() => setOpenSlug(null)}
     >
-      <ul className="mx-auto flex max-w-[1512px] flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3 sm:px-6 lg:px-[60px]">
+      <ul className="mx-auto flex max-w-[1512px] flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3 sm:px-6 lg:px-30">
         {categories.map((category) => {
           const isOpen = openSlug === category.slug;
           const canOpen = category.subCategories.length > 0;

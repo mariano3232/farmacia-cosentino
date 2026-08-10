@@ -10,7 +10,7 @@ const navLinks = [
 export function Header() {
   return (
     <header className="bg-white shadow-[0_4px_4px_rgba(140,140,140,0.1)]">
-      <div className="mx-auto flex max-w-[1512px] flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:gap-4 lg: lg:py-6 lg:px-15">
+      <div className="mx-auto flex max-w-[1512px] flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:px-30 lg:gap-4 lg: lg:py-6 lg:px-15">
         <div className="flex items-center justify-between lg:contents">
           <div className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-3 lg:order-1">
             <img src="/logo.png" alt="" className="size-6 shrink-0" />
