@@ -36,9 +36,10 @@ export function HeroCarousel() {
         <CarouselContent className="ml-0">
           {Array.from({ length: SLIDES }).map((_, index) => (
             <CarouselItem key={index} className="pl-0">
-              <Card className="rounded-[9px] border-0 bg-placeholder py-0 ring-0">
+              {/* <Card className="rounded-[9px] border-0 bg-placeholder py-0 ring-0">
                 <CardContent className="h-[321px] p-0" aria-hidden />
-              </Card>
+              </Card> */}
+              <img src="/novedades/NUEVO1.png" alt="" />
             </CarouselItem>
           ))}
         </CarouselContent>
