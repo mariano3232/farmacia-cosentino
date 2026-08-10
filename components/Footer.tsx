@@ -1,111 +1,25 @@
-import type { ReactNode } from "react";
-import { HeadsetIcon } from "./icons";
-
-const institutionalLinks = [
-  "Nuestra empresa",
-  "Trabajá con nosotros",
-  "Proveedores",
-  "Inversiones",
-];
-
-const serviceLinks = [
-  "Folletos",
-  "Promociones",
-  "Sucursales",
-  "Medios de pago",
-  "Medicamentos Recetados",
-];
-
-const onlineLinks = ["Mis pedidos", "Mi carrito", "Costos de envío"];
-
-const supportLinks = [
-  "Legales de promociones",
-  "Términos y condiciones",
-  "Centro de ayuda",
-  "Libro de quejas digital (Ley 2247)",
-];
-
-const beautyLinks = [
-  "Maquillaje",
-  "Perfumes y fragancias",
-  "Cuidado de la piel",
-  "Cuidado capilar",
-  "Electro belleza",
-];
-
-const dermocosmeticsLinks = [
-  "Cuidado facial",
-  "Cuidado corporal",
-  "Protectores solares",
-  "Cuidado del pelo",
-];
-
-const brandLinks = [
-  "Get The Look",
-  "La Roche Posay",
-  "Vichy",
-  "Eucerin",
-  "Isdin",
-];
-
-const healthLinks = [
-  "Comprá medicamentos",
-  "Servicios de salud",
-  "Productos de farmacia",
-  "Cuidado oral",
-  "Suplementos dietarios y deportivos",
-];
-
-const perfumeLinks = [
-  "Perfumes y fragancias para mujer",
-  "Perfumes y fragancias para hombre",
-  "Perfumes y fragancias para bebés y niños",
-  "Colonias y Body Splash",
-];
-
-function FooterColumn({
-  title,
-  links,
-}: {
-  title: string;
-  links: string[];
-}) {
-  return (
-    <div>
-      <h3 className="mb-4 font-bold text-sm text-foreground">{title}</h3>
-      <ul className="space-y-2">
-        {links.map((link) => (
-          <li key={link}>
-            <a
-              href="#"
-              className="text-xs text-gray-text transition-colors hover:text-dark-green"
-            >
-              {link}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function SocialIcon({ label, children }: { label: string; children: ReactNode }) {
-  return (
-    <a
-      href="#"
-      aria-label={label}
-      className="flex size-8 items-center justify-center rounded-full bg-gray-text text-white transition-opacity hover:opacity-80"
-    >
-      {children}
-    </a>
-  );
-}
-
 export function Footer() {
   return (
-    <footer className="flex flex-col gap-3 items-center justify-center bg-light-gray h-40 mt-20 w-full">
-      <h1>FOOTER</h1>
-      <p>aca va a haber un footer</p>
+    <footer className="mt-auto p-15 px-30 h-[350px] bg-[#F5F5F5] shadow-2xl">
+      <div className="">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+          <p className="font-bold text-2xl leading-none text-medium-green">
+            FARMACIA COSENTINO
+          </p>
+
+          <div className="flex flex-col items-start gap-6 sm:items-end">
+            <p className="text-right text-[25px] font-bold leading-tight text-gray-text">
+              Belgrano 302, San Cayetano
+            </p>
+            <button
+              type="button"
+              className="rounded-[3px] bg-offers-red px-5 py-3 text-xs font-extrabold tracking-[0.03em] text-white transition-opacity hover:opacity-90"
+            >
+              BOTÓN DE ARREPENTIMIENTO
+            </button>
+          </div>
+        </div>
+      </div>
     </footer>
   );
 }
