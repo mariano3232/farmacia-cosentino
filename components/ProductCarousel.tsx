@@ -11,7 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 import CarouselDots from "./CarouselDots";
 
-const offers = ["/OFERTA1.png","/OFERTA2.png"];
+const offers = ["/OFERTA1.png","/OFERTA2.png","/OFERTA3.png"];
 
 export function ProductCarousel() {
   const [api, setApi] = React.useState<CarouselApi>();
