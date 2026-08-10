@@ -9,6 +9,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
+import CarouselDots from "./CarouselDots";
 
 const SLIDES = 5;
 
@@ -35,7 +36,7 @@ export function HeroCarousel() {
         <CarouselContent className="ml-0">
           {Array.from({ length: SLIDES }).map((_, index) => (
             <CarouselItem key={index} className="pl-0">
-              <Card className="rounded-[5px] border-0 bg-placeholder py-0 ring-0">
+              <Card className="rounded-[9px] border-0 bg-placeholder py-0 ring-0">
                 <CardContent className="h-[321px] p-0" aria-hidden />
               </Card>
             </CarouselItem>
@@ -48,34 +49,6 @@ export function HeroCarousel() {
         active={current}
         onSelect={(index) => api?.scrollTo(index)}
       />
-    </div>
-  );
-}
-
-function CarouselDots({
-  count,
-  active,
-  onSelect,
-}: {
-  count: number;
-  active: number;
-  onSelect?: (index: number) => void;
-}) {
-  return (
-    <div className="flex items-center justify-center gap-2">
-      {Array.from({ length: count }).map((_, index) => (
-        <button
-          key={index}
-          type="button"
-          aria-label={`Ir a la diapositiva ${index + 1}`}
-          aria-current={index === active}
-          onClick={() => onSelect?.(index)}
-          className={cn(
-            "h-[5px] rounded-full transition-all",
-            index === active ? "w-8 bg-dark-green" : "w-[5px] bg-placeholder"
-          )}
-        />
-      ))}
     </div>
   );
 }

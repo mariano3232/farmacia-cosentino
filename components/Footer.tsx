@@ -103,7 +103,7 @@ function SocialIcon({ label, children }: { label: string; children: ReactNode })
 
 export function Footer() {
   return (
-    <footer className="flex flex-col gap-3 items-center justify-center bg-light-gray h-40 w-full">
+    <footer className="flex flex-col gap-3 items-center justify-center bg-light-gray h-40 mt-20 w-full">
       <h1>FOOTER</h1>
       <p>aca va a haber un footer</p>
     </footer>
