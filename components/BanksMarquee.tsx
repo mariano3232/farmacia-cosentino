@@ -11,11 +11,11 @@ const banks = [
 
 export function BanksMarquee() {
   return (
-    <Marquee pauseOnHover speed={20} className="mt-0 py-2">
+    <Marquee pauseOnHover speed={25} className="mt-0 py-2">
       {banks.map((bank) => (
         <div
           key={bank.src}
-          className="mx-8 flex shrink-0 items-center justify-center sm:mx-10"
+          className="mx-[7.5px] flex shrink-0 items-center justify-center"
         >
           <img
             src={bank.src}

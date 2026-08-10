@@ -1,4 +1,5 @@
 import { BanksMarquee } from "@/components/BanksMarquee";
+import { BrandsMarquee } from "@/components/BrandsMarquee";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { Card, CardContent } from "@/components/ui/card";
@@ -50,11 +51,7 @@ export default function Home() {
 
       <section className="mx-auto w-full">
         <Title>Tus marcas favoritas</Title>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-4">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <PlaceholderCard key={index} className="h-[146px]" />
-          ))}
-        </div>
+        <BrandsMarquee />
       </section>
     </main>
   );
