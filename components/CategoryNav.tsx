@@ -136,7 +136,7 @@ export function CategoryNav() {
       {hasDropdown && openCategory && (
         <>
           <div
-            className="pb-24 absolute inset-x-0 top-full z-50 rounded-b-[10px] bg-white shadow-[0_4px_4px_rgba(140,140,140,0.1)]"
+            className="pb-24 absolute inset-x-0 top-full z-50 rounded-b-[10px] bg-white shadow-[0_4px_4px_rgba(140,140,140,0.1)] lg:px-30"
             onMouseEnter={() => setOpenSlug(openCategory.slug)}
           >
             <div className="mx-auto flex max-w-[1512px] flex-wrap gap-x-16 gap-y-5 px-4 py-7 sm:px-6 lg:px-[60px]">

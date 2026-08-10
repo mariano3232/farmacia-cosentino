@@ -1,3 +1,4 @@
+import { BanksMarquee } from "@/components/BanksMarquee";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { Card, CardContent } from "@/components/ui/card";
@@ -25,6 +26,11 @@ export default function Home() {
       <section className="mx-auto w-full">
         <Title>¡Lo nuevo y súper piola!</Title>
         <HeroCarousel />
+      </section>
+
+      <section className="mx-auto w-full">
+        <Title>Medios de pago</Title>
+        <BanksMarquee />
       </section>
 
       <section className="mx-auto w-full">
