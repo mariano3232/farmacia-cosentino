@@ -27,7 +27,7 @@ export function CategoryNav() {
                 href="#"
                 className={`text-xs transition-colors hover:text-dark-green ${
                   category.active
-                    ? "font-nexa-bold text-dark-green"
+                    ? "font-bold text-dark-green"
                     : "text-gray-text"
                 }`}
               >

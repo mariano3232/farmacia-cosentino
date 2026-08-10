@@ -1,13 +1,10 @@
+import { Inter_Tight } from "next/font/google";
 import localFont from "next/font/local";
 
-export const nexaText = localFont({
-  src: "./NexaText-Trial-Regular.otf",
-  variable: "--font-nexa-text",
-});
-
-export const nexaTextExtraBold = localFont({
-  src: "./NexaText-Trial-ExtraBold.otf",
-  variable: "--font-nexa-text-extrabold",
+export const interTight = Inter_Tight({
+  subsets: ["latin"],
+  variable: "--font-inter-tight",
+  display: "swap",
 });
 
 export const ppEditorial = localFont({
@@ -15,8 +12,6 @@ export const ppEditorial = localFont({
   variable: "--font-pp-editorial",
 });
 
-export const fontVariables = [
-  nexaText.variable,
-  nexaTextExtraBold.variable,
-  ppEditorial.variable,
-].join(" ");
+export const fontVariables = [interTight.variable, ppEditorial.variable].join(
+  " "
+);

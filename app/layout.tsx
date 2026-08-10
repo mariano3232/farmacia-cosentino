@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { fontVariables, nexaText } from "./fonts";
+import { fontVariables, interTight } from "./fonts";
 import { CategoryNav } from "@/components/CategoryNav";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
@@ -9,7 +9,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Farmacia Cosentino",
   description: "Farmacia Cosentino",
-  icons:"/logo.png",
+  icons: "/logo.png",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -18,7 +18,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="es"
       className={cn(fontVariables, "h-full font-sans antialiased")}
     >
-      <body className={`${nexaText.className} flex min-h-full flex-col`}>
+      <body className={`${interTight.className} flex min-h-full flex-col`}>
         <div className="h-[39px] bg-light-green" />
         <Header />
         <CategoryNav />

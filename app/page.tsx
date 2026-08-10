@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <main className="flex flex-1 flex-col bg-white">
       <section className="mx-auto w-full max-w-[1512px] px-[60px] pt-8">
-        <h2 className="mb-6 font-nexa-bold text-base text-gray-text">
+        <h2 className="mb-6 font-bold text-base text-gray-text">
           ¡Lo nuevo y súper piola!
         </h2>
 
@@ -25,7 +25,7 @@ export default function Home() {
       </section>
 
       <section className="mx-auto w-full max-w-[1512px] px-[60px] pb-12 pt-16">
-        <h2 className="mb-8 font-nexa-bold text-[25px] leading-tight text-gray-text">
+        <h2 className="mb-8 font-bold text-[25px] leading-tight text-gray-text">
           Promociones bancarias para ahorrar más
         </h2>
 
@@ -35,12 +35,10 @@ export default function Home() {
           ))}
           <PlaceholderCard className="mb-16 h-[146px] sm:col-span-4" />
         </div>
-
-        
       </section>
 
       <section className="mx-auto w-full max-w-[1512px] px-[60px] pb-12">
-        <h2 className="mb-8 font-nexa-bold text-base text-gray-text">
+        <h2 className="mb-8 font-bold text-base text-gray-text">
           Super ofertas
         </h2>
 
@@ -48,7 +46,7 @@ export default function Home() {
       </section>
 
       <section className="mx-auto w-full max-w-[1512px] px-[60px] pb-16">
-        <h2 className="mb-8 font-nexa-bold text-base text-gray-text">
+        <h2 className="mb-8 font-bold text-base text-gray-text">
           Tus marcas favoritas
         </h2>
 

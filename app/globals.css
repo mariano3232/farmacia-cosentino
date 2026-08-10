@@ -33,11 +33,9 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-nexa-text);
-  --font-nexa: var(--font-nexa-text);
-  --font-nexa-bold: var(--font-nexa-text-extrabold);
+  --font-sans: var(--font-inter-tight);
   --font-editorial: var(--font-pp-editorial);
-  --font-heading: var(--font-nexa-text-extrabold);
+  --font-heading: var(--font-inter-tight);
 
   --color-light-green: var(--light-green);
   --color-medium-green: var(--medium-green);
@@ -76,7 +74,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-nexa-text), sans-serif;
+    font-family: var(--font-inter-tight), sans-serif;
   }
   html {
     @apply font-sans;
