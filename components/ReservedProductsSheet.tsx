@@ -16,7 +16,7 @@ export function ReservedProductsSheet() {
     <Sheet>
       <SheetTrigger
         aria-label="Productos reservados"
-        className="flex items-center justify-center gap-2 rounded-[5px] bg-dark-green p-2 text-[12px] text-white"
+        className="flex cursor-pointer items-center justify-center gap-2 rounded-[5px] bg-dark-green p-2 text-[12px] text-white"
       >
         <div className="flex flex-col items-start leading-3">
           <span>Productos</span>
