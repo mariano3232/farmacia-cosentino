@@ -2,18 +2,6 @@ import { BanksMarquee } from "@/components/BanksMarquee";
 import { BrandsMarquee } from "@/components/BrandsMarquee";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { ProductCarousel } from "@/components/ProductCarousel";
-import { Card, CardContent } from "@/components/ui/card";
-
-// function PlaceholderCard({ className }: { className?: string }) {
-//   return (
-//     <Card
-//       className={`rounded-[9px] border-0 bg-placeholder py-0 ring-0 ${className ?? ""}`}
-//       aria-hidden
-//     >
-//       <CardContent className="h-full p-0" />
-//     </Card>
-//   );
-// }
 
 function Title({ children }: { children: React.ReactNode }) {
   return (
