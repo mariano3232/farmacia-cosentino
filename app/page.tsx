@@ -16,27 +16,14 @@ export default function Home() {
         <Title>¡Lo nuevo y súper piola!</Title>
         <HeroCarousel />
       </section>
-
       <section className="mx-auto w-full">
         <Title>Medios de pago</Title>
         <BanksMarquee />
       </section>
-
-      {/* <section className="mx-auto w-full">
-        <Title>Promociones bancarias para ahorrar más</Title>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-4 md:grid-cols-4">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <PlaceholderCard key={index} className="h-[146px] rounded-[9px]" />
-          ))}
-          <PlaceholderCard className="h-[146px] rounded-[9px] sm:col-span-4" />
-        </div>
-      </section> */}
-
       <section className="mx-auto w-full">
         <Title>Super ofertas</Title>
         <ProductCarousel />
       </section>
-
       <section className="mx-auto w-full mb-15">
         <Title>Tus marcas favoritas</Title>
         <BrandsMarquee />

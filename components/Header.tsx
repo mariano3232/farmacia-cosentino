@@ -20,7 +20,7 @@ export async function Header() {
               href="/"
               className="relative top-0.5 overflow-visible font-editorial text-[24px] leading-none text-medium-green"
             >
-              FARMAPITY
+              FARMACIA COSENTINO
             </Link>
           </div>
 
