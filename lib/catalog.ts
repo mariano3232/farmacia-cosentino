@@ -165,6 +165,42 @@ export async function getProducts(filters: ProductQueryFilters = {}) {
   })) satisfies CatalogProduct[];
 }
 
+export async function getPendingReservedQuantities() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return {} as Record<number, number>;
+
+  const { data, error } = await supabase
+    .from("reservations")
+    .select("reservation_items(product_id, quantity)")
+    .eq("user_uid", user.id)
+
+  if (error) {
+    console.error("pending quantities error:", error);
+    return {} as Record<number, number>;
+  }
+
+  const quantities: Record<number, number> = {};
+
+  for (const reservation of data ?? []) {
+    const items = Array.isArray(reservation.reservation_items)
+      ? reservation.reservation_items
+      : [];
+
+    for (const item of items) {
+      const productId = Number(item.product_id);
+      const quantity = Number(item.quantity ?? 0);
+      if (!productId || quantity <= 0) continue;
+      quantities[productId] = (quantities[productId] ?? 0) + quantity;
+    }
+  }
+
+  return quantities;
+}
+
 export function formatPrice(price: number) {
   return new Intl.NumberFormat("es-AR", {
     style: "currency",

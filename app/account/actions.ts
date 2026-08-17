@@ -27,9 +27,7 @@ export async function updateProfile(
   const birth_date = String(formData.get("birth_date") ?? "").trim();
 
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const {data: { user }} = await supabase.auth.getUser();
 
   if (!user) {
     return { error: "Tenés que iniciar sesión.", success: null };
