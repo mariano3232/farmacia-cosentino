@@ -5,7 +5,6 @@ import { ProductFilters } from "@/components/ProductFilters";
 import {
   getCategories,
   getCategoryBySlug,
-  getPendingReservedQuantities,
   getProducts,
   getSubCategories,
   parseSort,
@@ -47,14 +46,13 @@ export default async function ProductsCategoryPage({
     );
   }
 
-  const [subCategories, products, reservedQuantities] = await Promise.all([
+  const [subCategories, products] = await Promise.all([
     getSubCategories(category.id),
     getProducts({
       categorySlug,
       subSlug: sub && sub !== "all" ? sub : undefined,
       sort,
     }),
-    getPendingReservedQuantities(),
   ]);
 
   const activeSub = subCategories.find((item) => item.slug === sub);
@@ -122,11 +120,7 @@ export default async function ProductsCategoryPage({
             ) : (
               <div className="grid grid-cols-1 justify-items-center gap-6 sm:grid-cols-2 xl:grid-cols-3">
                 {products.map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    reservedQuantity={reservedQuantities[product.id] ?? 0}
-                  />
+                  <ProductCard key={product.id} product={product} />
                 ))}
               </div>
             )}

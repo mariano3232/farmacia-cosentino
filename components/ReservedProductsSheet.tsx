@@ -1,7 +1,5 @@
 "use client";
 
-import { removeReservedProduct } from "@/app/products/actions";
-import { ReservationQuantityControls } from "@/components/ReservationQuantityControls";
 import { CartIcon } from "./icons";
 import {
   Sheet,
@@ -12,6 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { getCartItems } from "@/lib/cart";
 import { createClient } from "@/lib/supabase/client";
 import { useCallback, useEffect, useState, useTransition } from "react";
 
@@ -45,76 +44,65 @@ function normalizeProduct(
 export function ReservedProductsSheet() {
   const [items, setItems] = useState<ReservationItem[]>([]);
   const [loading, setLoading] = useState(false);
-
-  const getReservedProducts = useCallback(async () => {
-    setLoading(true)
-    const supabase = createClient();
-    const { data } = await supabase.auth.getUser();
-    const user = data.user;
-    if (!user) {
-      setItems([]);
-      return;
-    }
-    const { data: reservationsData, error } = await supabase.from("reservations").select(`
-      status,
-      reservation_items (
-        id,
-        product_id,
-        unit_price,
-        quantity,
-        product:products (
-          name,
-          image_url
-        )
-      )`
-    ).eq("user_uid", user.id).order('created_at')
-
-    if (error) {
-      console.error("Error fetching reservations: ", error);
-      return;
-    }
-
-    const nextItems: ReservationItem[] = [];
-    for (const reservation of reservationsData ?? []) {
-      const reservationItems = Array.isArray(reservation.reservation_items)? reservation.reservation_items: [];
-
-      for (const item of reservationItems) {
-        const quantity = Number(item.quantity ?? 0);
-        if (!item.product_id || quantity <= 0) continue;
-
-        nextItems.push({
-          id: item.id,
-          product_id: item.product_id,
-          unit_price: Number(item.unit_price ?? 0),
-          quantity,
-          status: reservation.status,
-          product: normalizeProduct(item.product),
-        });
-      }
-    }
-    console.log("aaaa")
-    setItems(nextItems);
-    setLoading(false)
-  }, []);
+  const [open, setOpen] = useState(false);
+  const [cartItems, setCartItems] = useState<any>([])
 
   useEffect(() => {
-    getReservedProducts();
-  }, [getReservedProducts]);
+    window.addEventListener('storage', () => {
+      console.log("LISTENER STORAGE")
+      const cartItemsStorage = getCartItems()
+      setCartItems(cartItemsStorage || [])  
+    });
+  }, [])
 
-  function handleReserve(){
+  useEffect(() => {
+    const openCart = () => setOpen(true);
+    window.addEventListener("open-cart", openCart);
+    return () => window.removeEventListener("open-cart", openCart);
+  }, []);
 
+  function addOne(product_id:any){
+    let newProducts = cartItems
+    let index = newProducts.findIndex( (e:any) => e.id == product_id )
+    newProducts[index].quantity += 1
+    localStorage.setItem("farmacia-reserved-products", JSON.stringify(newProducts));
+    window.dispatchEvent(new Event('storage'))
+  }
+  function removeOne(product_id:any){
+    let newProducts = cartItems
+    let index = newProducts.findIndex( (e:any) => e.id == product_id )
+    if (newProducts[index].quantity > 1){
+      newProducts[index].quantity -= 1
+      localStorage.setItem("farmacia-reserved-products", JSON.stringify(newProducts));
+      window.dispatchEvent(new Event('storage'))
+    }
+  }
+  
+  function handleDelete(product_id:String){
+    let newProducts = cartItems
+    let index = newProducts.findIndex( (e:any) => e.id == product_id )
+    if (index > -1) {
+      newProducts.splice(index, 1);
+      localStorage.setItem("farmacia-reserved-products", JSON.stringify(newProducts));
+      window.dispatchEvent(new Event('storage'))
+    }
   }
 
-  const total = items.reduce(
-    (sum, item) => sum + item.unit_price * item.quantity,
+  function handleReserve(){
+    
+  }
+
+  const total = cartItems.reduce(
+    (sum:any, item:any) => sum + item.price * item.quantity,
     0,
   );
 
   return (
     <Sheet
-      onOpenChange={(open) => {
-        if (open) getReservedProducts();
-      }}
+      open={open} onOpenChange={setOpen}
+      // onOpenChange={(open) => {
+      //   if (open) getReservedProducts();
+      // }}
     >
       <SheetTrigger
         aria-label="Productos reservados"
@@ -122,9 +110,9 @@ export function ReservedProductsSheet() {
       >
         <div className="flex flex-col items-start leading-3">
           <span>Productos</span>
-          <span>reservados</span>
+          <span>reservados ({cartItems?.length || 0})</span>
         </div>
-        <CartIcon className="size-[18px]" />
+        <CartIcon className="size-[18px]"/>
       </SheetTrigger>
 
       <SheetContent
@@ -140,14 +128,47 @@ export function ReservedProductsSheet() {
           </SheetDescription>
         </SheetHeader>
 
-        {items.length ? (
+        {cartItems.length ? (
           <div className="mt-4 flex flex-col gap-6 px-8">
-            {items.map((item) => (
-              <ReservedProductRow
-                key={item.id}
-                item={item}
-                onMutated={getReservedProducts}
-              />
+            {cartItems.map((item:any,i:any) => (
+              <div key={item.id} className="relative flex rounded-[8px] border border-gray-400 p-6 pb-4 text-gray-text">
+              <div className="absolute top-[5px] right-[5px] flex items-center gap-2">
+                <div className="h-[14px] w-[60px] rounded-[16px] bg-[#C3C3C3]" />
+                <p>({item.status || "Para reservar"})</p>
+                <button
+                  type="button"
+                  aria-label="Eliminar producto"
+                  onClick={() => {handleDelete(item.id)}}
+                  className="cursor-pointer px-1 text-lg leading-none disabled:opacity-50"
+                >
+                  ×
+                </button>
+              </div>
+              {item?.image_url ? (
+                <img
+                  src={item.image_url}
+                  className="h-[94px] w-[78px] object-contain"
+                  alt={item.name}
+                />
+              ) : (
+                <div className="flex h-[94px] w-[78px] items-center justify-center bg-light-gray text-[10px]">
+                  Sin imagen
+                </div>
+              )}
+              <div className="ml-4 flex w-full flex-col justify-between gap-3 pt-3">
+                <p className="text-[17px] text-[#747373]">{item.name}</p>
+                <div className="flex justify-between">
+                  <div className="text-xl flex gap-2 border items-center border-gray-500 rounded-[8px] px-4">
+                    <button className="cursor-pointer" onClick={()=>{removeOne(item.id)}}>-</button>
+                    {item?.quantity}
+                    <button className="cursor-pointer" onClick={()=>{addOne(item.id)}}>+</button>
+                  </div>
+                  <h1 className="text-2xl font-bold text-[#747373]">
+                    {formatPrice(item.price * item.quantity)}
+                  </h1>
+                </div>
+              </div>
+            </div>
             ))}
           </div>
         ) : (
@@ -175,63 +196,5 @@ export function ReservedProductsSheet() {
         </SheetFooter>
       </SheetContent>
     </Sheet>
-  );
-}
-
-function ReservedProductRow({
-  item,
-  onMutated,
-}: {
-  item: ReservationItem;
-  onMutated: () => void;
-}) {
-  const [isPending, startTransition] = useTransition();
-
-  return (
-    <div className="relative flex rounded-[8px] border border-gray-400 p-6 pb-4 text-gray-text">
-      <div className="absolute top-[5px] right-[5px] flex items-center gap-2">
-        <div className="h-[14px] w-[60px] rounded-[16px] bg-[#C3C3C3]" />
-        <p>({item.status})</p>
-        <button
-          type="button"
-          aria-label="Eliminar producto"
-          disabled={isPending}
-          onClick={() => {
-            startTransition(async () => {
-              await removeReservedProduct(item.product_id);
-              onMutated();
-            });
-          }}
-          className="cursor-pointer px-1 text-lg leading-none disabled:opacity-50"
-        >
-          ×
-        </button>
-      </div>
-      {item.product.image_url ? (
-        <img
-          src={item.product.image_url}
-          className="h-[94px] w-[78px] object-contain"
-          alt={item.product.name}
-        />
-      ) : (
-        <div className="flex h-[94px] w-[78px] items-center justify-center bg-light-gray text-[10px]">
-          Sin imagen
-        </div>
-      )}
-      <div className="ml-4 flex w-full flex-col justify-between gap-3 pt-3">
-        <p className="text-[17px] text-[#747373]">{item.product.name}</p>
-        <div className="flex justify-between">
-          <ReservationQuantityControls
-            productId={item.product_id}
-            quantity={item.quantity}
-            variant="sheet"
-            onMutated={onMutated}
-          />
-          <h1 className="text-2xl font-bold text-[#747373]">
-            {formatPrice(item.unit_price * item.quantity)}
-          </h1>
-        </div>
-      </div>
-    </div>
   );
 }

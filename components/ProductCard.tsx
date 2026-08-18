@@ -1,15 +1,18 @@
-import { ReservationQuantityControls } from "@/components/ReservationQuantityControls";
-import { formatPrice, type CatalogProduct } from "@/lib/catalog";
+"use client";
+
+import type { CatalogProduct } from "@/lib/catalog";
+import { addProductToCart } from "@/lib/cart";
+import { formatPrice } from "@/lib/utils";
 
 type ProductCardProps = {
   product: CatalogProduct;
-  reservedQuantity?: number;
 };
 
-export default function ProductCard({
-  product,
-  reservedQuantity = 0,
-}: ProductCardProps) {
+export default function ProductCard({ product }: ProductCardProps) {
+  function handleReserve() {
+    addProductToCart(product);
+  }
+
   return (
     <div className="h-[560px] w-[297px] overflow-hidden rounded-[8px] bg-white text-gray-text">
       <div className="flex h-[340px] items-center justify-center p-10">
@@ -36,10 +39,13 @@ export default function ProductCard({
         </div>
         <div className="mt-auto flex w-full items-center justify-between gap-3">
           <p className="text-3xl font-bold">{formatPrice(product.price)}</p>
-          <ReservationQuantityControls
-            productId={product.id}
-            quantity={reservedQuantity}
-          />
+          <button
+            type="button"
+            className="rounded-md bg-dark-green px-3 py-1 text-white cursor-pointer"
+            onClick={handleReserve}
+          >
+            Reservar
+          </button>
         </div>
       </div>
     </div>

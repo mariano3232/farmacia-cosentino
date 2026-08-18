@@ -51,7 +51,6 @@ export async function Header() {
                 </Link>
               )}
             </nav>
-
             <ReservedProductsSheet />
           </div>
         </div>

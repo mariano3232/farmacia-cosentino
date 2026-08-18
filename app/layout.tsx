@@ -4,6 +4,7 @@ import { CategoryNav } from "@/components/CategoryNav";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/toast"
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className={`${interTight.className} flex min-h-full flex-col`}>
         <div className="h-[39px] bg-light-green" />
+        <Toaster/>
         <Header />
         <CategoryNav />
         {children}
