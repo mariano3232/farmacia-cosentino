@@ -25,8 +25,7 @@ export default function MyReservations() {
             product:products ( name, image_url )
           )
         `)
-        .eq("user_uid", user.id)
-      console.log("reservationData :", data)
+        .eq("user_uid", user.id).neq("status","retirado")
       setReservations(data)
     }
     getReservations()

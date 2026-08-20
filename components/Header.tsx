@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { SearchIcon } from "./icons";
+import { Suspense } from "react";
+import { HeaderSearch, HeaderSearchFallback } from "./HeaderSearch";
 import { ReservedProductsSheet } from "./ReservedProductsSheet";
 import { createClient } from "@/lib/supabase/server";
 import { signOut } from "@/app/auth/actions";
@@ -65,14 +66,9 @@ export async function Header() {
           </div>
         </div>
 
-        <div className="flex h-[38px] w-full min-w-0 items-center gap-3 rounded-md border border-placeholder bg-white px-4 lg:order-2 lg:mx-auto lg:max-w-[620]">
-          <SearchIcon className="size-[18px] shrink-0" />
-          <input
-            type="search"
-            placeholder="¿Qué estás buscando?"
-            className="w-full min-w-0 bg-transparent text-xs text-foreground outline-none placeholder:text-gray-text"
-          />
-        </div>
+        <Suspense fallback={<HeaderSearchFallback />}>
+          <HeaderSearch />
+        </Suspense>
       </div>
     </header>
   );

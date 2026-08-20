@@ -33,7 +33,12 @@ type ProductQueryFilters = {
   categorySlug?: string;
   subSlug?: string;
   sort?: ProductSort;
+  q?: string;
 };
+
+function escapeIlikePattern(value: string) {
+  return value.replace(/\\/g, "\\\\").replace(/%/g, "\\%").replace(/_/g, "\\_");
+}
 
 function normalizeRelation<T>(value: T | T[] | null | undefined): T | null {
   if (!value) return null;
@@ -123,6 +128,11 @@ export async function getProducts(filters: ProductQueryFilters = {}) {
 
   if (subCategoryId) {
     query = query.eq("sub-category", subCategoryId);
+  }
+
+  const search = filters.q?.trim();
+  if (search) {
+    query = query.ilike("name", `%${escapeIlikePattern(search)}%`);
   }
 
   switch (filters.sort) {
