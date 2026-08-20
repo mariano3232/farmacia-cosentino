@@ -9,7 +9,9 @@ export async function Header() {
   const supabase = await createClient();
   const { data } = await supabase.auth.getClaims();
   const user = data?.claims;
-
+  const { data: roles } = await supabase.from("user_roles").select("role");
+  const isAdmin = roles?.[0]?.role === "admin";
+  
   return (
     <header className="bg-white shadow-[0_4px_4px_rgba(140,140,140,0.1)]">
       <div className="mx-auto flex max-w-[1512px] flex-col gap-4 px-4 py-4 sm:px-6 lg:flex-row lg:px-30 lg:gap-4 lg:py-6">
@@ -32,6 +34,14 @@ export async function Header() {
               >
                 Contacto
               </a>
+              {isAdmin ? (
+                <Link
+                  href="/reservations"
+                  className="text-xs font-bold text-gray-text transition-colors hover:text-dark-green"
+                >
+                  Reservas
+                </Link>
+              ) : null}
               {user ? (
                 <Link href="/account">
                   <Button

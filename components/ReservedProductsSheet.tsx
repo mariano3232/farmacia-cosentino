@@ -10,9 +10,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { getCartItems } from "@/lib/cart";
+import { CART_STORAGE_KEY, getCartItems } from "@/lib/cart";
 import { createClient } from "@/lib/supabase/client";
-import { useCallback, useEffect, useState, useTransition } from "react";
+import { toast } from "@/components/ui/toast";
+import { useEffect, useState } from "react";
 
 type ReservationItem = {
   id: number;
@@ -31,21 +32,12 @@ function formatPrice(price: number) {
   }).format(price);
 }
 
-function normalizeProduct(
-  value:
-    | { name: string; image_url: string | null }
-    | { name: string; image_url: string | null }[]
-    | null,
-) {
-  if (!value) return { name: "", image_url: null };
-  return Array.isArray(value) ? (value[0] ?? { name: "", image_url: null }) : value;
-}
-
 export function ReservedProductsSheet() {
-  const [items, setItems] = useState<ReservationItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [cartItems, setCartItems] = useState<any>([])
+
+  const supabase = createClient()
 
   useEffect(() => {
     window.addEventListener('storage', () => {
@@ -88,22 +80,68 @@ export function ReservedProductsSheet() {
     }
   }
 
-  function handleReserve(){
-    
-  }
-
   const total = cartItems.reduce(
     (sum:any, item:any) => sum + item.price * item.quantity,
     0,
   );
 
+  async function handleReserve() {
+    if (!cartItems.length || loading) return;
+    setLoading(true);
+    const {data: { user }} = await supabase.auth.getUser();
+    if (!user) {
+      setLoading(false);
+      window.location.href = "/login";
+      return;
+    }
+
+    const { data: reservation, error: reservationError } = await supabase.from("reservations").insert({
+      user_uid: user.id,
+      total,
+      status: "pendiente",
+    }).select("id").single();
+
+    if (reservationError || !reservation) {
+      setLoading(false);
+      toast.add({
+        title: "No se pudo reservar",
+        description: reservationError?.message ?? "Intentá de nuevo.",
+        type: "error",
+      });
+      return;
+    }
+
+    const { error: itemsError } = await supabase.from("reservation_items").insert(
+      cartItems.map((item: { id: number; price: number; quantity: number }) => ({
+        reservation_id: reservation.id,
+        product_id: item.id,
+        unit_price: item.price,
+        quantity: item.quantity,
+      })),
+    );
+    if (itemsError) {
+      setLoading(false);
+      toast.add({
+        title: "No se pudo reservar",
+        description: itemsError.message,
+        type: "error",
+      });
+      return;
+    }
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify([]));
+    window.dispatchEvent(new Event("storage"));
+    setCartItems([]);
+    setOpen(false);
+    setLoading(false);
+    toast.add({
+      title: "Reserva creada",
+      description: "Podés verla en tu cuenta.",
+      type: "success",
+    });
+  }
+
   return (
-    <Sheet
-      open={open} onOpenChange={setOpen}
-      // onOpenChange={(open) => {
-      //   if (open) getReservedProducts();
-      // }}
-    >
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger
         aria-label="Productos reservados"
         className="flex cursor-pointer items-center justify-center gap-2 rounded-[5px] bg-dark-green p-2 text-[12px] text-white"
@@ -121,10 +159,10 @@ export function ReservedProductsSheet() {
       >
         <SheetHeader className="border-b border-placeholder">
           <SheetTitle className="font-bold text-dark-green">
-            Productos reservados
+            Productos a reservar
           </SheetTitle>
           <SheetDescription>
-            Productos que guardaste para retirar.
+            Productos que guardaste para reservar.
           </SheetDescription>
         </SheetHeader>
 
@@ -187,7 +225,7 @@ export function ReservedProductsSheet() {
         <SheetFooter className="border-t border-placeholder">
           <button
             type="button"
-            className="w-full rounded-[5px] bg-dark-green px-4 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
+            className="cursor-pointer w-full rounded-[5px] bg-dark-green px-4 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
             onClick={()=>{handleReserve()}}
             disabled={loading}
           >
